@@ -29,7 +29,7 @@ $(document).ready(function() {
 	var currentUser = Parse.User.current();
 	if (currentUser) {
 	    $('#login').css("display", "none");
-	}
+	}else{		$('#logout').css("display", "none");}
 
 	function login() {
 		Parse.User.logIn($('#login_username').val(), $('#login_password').val(), {
