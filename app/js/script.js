@@ -1,9 +1,15 @@
 $(document).ready(function() {
-	var el = document.getElementById("clickMe");
+	var el = document.getElementById("clickMeIn");
 	if (el.addEventListener)
 	    el.addEventListener("click", login, false);
 	else if (el.attachEvent)
-	    el.attachEvent('onclick', login);  
+	    el.attachEvent('onclick', login);  			
+	
+	var el = document.getElementById("clickMeOut");
+	if (el.addEventListener)
+	    el.addEventListener("click", logout, false);
+	else if (el.attachEvent)
+	    el.attachEvent('onclick', logout); 
 
   Parse.initialize("IreL2qXUQZqYq6xRUKpECvCSmHphZspk0gAlY72E", "ZqtSyDUwe6JwOEq6FZGfxk3H6G16ewxAlJSPuRDO");
 
@@ -20,10 +26,17 @@ $(document).ready(function() {
 	//   }
 	// });
 
+	var currentUser = Parse.User.current();
+	if (currentUser) {
+	    $('#login').css("display", "none");
+	}
+
 	function login() {
 		Parse.User.logIn($('#login_username').val(), $('#login_password').val(), {
   			success: function(user) {
-    			alert('Welcome, ' + $('#login_username').val());
+    		//	alert('Welcome, ' + $('#login_username').val());
+	    	$('#login').css("display", "none");
+	    	$('#logout').css("display", "Block");
   			},
   			error: function(user, error) {
     			alert('Login Failed');
@@ -34,9 +47,7 @@ $(document).ready(function() {
 	function logout() {
 		Parse.User.logOut();
 		var currentUser = Parse.User.current();
-	}
-
-	function test() {
-		alert("hey");
+		$('#login').css("display", "Block");
+		$('#logout').css("display", "none");
 	}
 });
