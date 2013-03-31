@@ -34,14 +34,9 @@ $(document).ready(function() {
 	function login() {
 		Parse.User.logIn($('#login_username').val(), $('#login_password').val(), {
   			success: function(user) {
-<<<<<<< HEAD
     		//	alert('Welcome, ' + $('#login_username').val());
 	    	$('#login').css("display", "none");
 	    	$('#logout').css("display", "Block");
-=======
-    			alert('Welcome, ' + $('#login_username').val());
-    			window.location = "http://www.google.com/"
->>>>>>> test
   			},
   			error: function(user, error) {
     			alert('Login Failed');
