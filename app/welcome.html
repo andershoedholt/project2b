@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=utf-8">
+		<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;" />
+		<title>Geolocation Test</title>
+ 
+		<script language="javascript" type="text/javascript">
+			function getLocation() {
+				// Get location no more than 10 minutes old. 600000 ms = 10 minutes.
+				navigator.geolocation.getCurrentPosition(showLocation, showError, {enableHighAccuracy:true,maximumAge:600000});
+			}
+ 
+			function showError(error) {
+				alert(error.code + ' ' + error.message);
+			}
+ 
+			function showLocation(position) {
+				geoinfo.innerHTML='<p>Latitude: ' + position.coords.latitude + '</p>' 
+				+ '<p>Longitude: ' + position.coords.longitude + '</p>' 
+				+ '<p>Accuracy: ' + position.coords.accuracy + '</p>' 
+				+ '<p>Altitude: ' + position.coords.altitude + '</p>' 
+				+ '<p>Altitude accuracy: ' + position.coords.altitudeAccuracy + '</p>' 
+				+ '<p>Speed: ' + position.coords.speed + '</p>' 
+				+ '<p>Heading: ' + position.coords.heading + '</p>';
+			}
+		</script>
+
+		  <script src="http://maps.google.com/maps/api/js?sensor=false" 
+          type="text/javascript"></script>
+	</head>
+	<body>
+		<script language="javascript" type="text/javascript">	
+			if (navigator.geolocation) {  
+				document.write('<p><input type="button" onclick="getLocation()" value="Show Geolocation Information" /></p>');
+			} else {  
+				document.write('<p>Sorry, your device or browser software does not appear to support geolocation services.</p>');  
+			}  
+		</script>
+ 
+		<div id="geoinfo"></div>
+
+
+<div id="map" style="width: 320px; height: 380px;"></div>
+
+  <script type="text/javascript">
+    var locations = [
+ //     ['Bondi Beach', -33.890542, 151.274856, 4],
+ //     ['Coogee Beach', -33.923036, 151.259052, 5],
+ //     ['Cronulla Beach', -34.028249, 151.157507, 3],
+ //     ['Manly Beach', -33.80010128657071, 151.28747820854187, 2],
+      ['Current Location', 40.686735899999995, -73.9893077, 1]
+ //     ['Current Location,' + position.coords.latitude + ', ' + position.coords.longitude + ', 1']
+    ];
+	//var wickedCoords = locations.coords.latitude;
+	//var wickedLocation =  new google.maps.LatLng(wickedCoords);
+//  alert(wickedCoords);  
+    var map = new google.maps.Map(document.getElementById('map'), {
+      zoom: 10,
+//      center: new google.maps.LatLng(-33.92, 151.25),
+      center: new google.maps.LatLng(40.686735899999995, -73.9893077),
+      mapTypeId: google.maps.MapTypeId.ROADMAP
+    });
+
+    var infowindow = new google.maps.InfoWindow();
+
+    var marker, i;
+
+    for (i = 0; i < locations.length; i++) {  
+      marker = new google.maps.Marker({
+        position: new google.maps.LatLng(locations[i][1], locations[i][2]),
+        map: map
+      });
+
+      google.maps.event.addListener(marker, 'click', (function(marker, i) {
+        return function() {
+          infowindow.setContent(locations[i][0]);
+          infowindow.open(map, marker);
+        }
+      })(marker, i));
+    }
+  </script>
+
+
+	</body>
+</html>
