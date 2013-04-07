@@ -1,19 +1,10 @@
 //Map code
 
 
-function getCurrentPosition(){
-    navigator.geolocation.getCurrentPosition(function (position) {
-            var userLocation = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-            return userLocation;
-        }
-    );
-}
-
      $(function () {
          var lat = 40.686563,
              lng = -73.98949700000003,
              latlng = new google.maps.LatLng(lat, lng),
-             //latlng = new google.maps.LatLng(userLocation),
              image = 'http://www.google.com/intl/en_us/mapfiles/ms/micons/blue-dot.png';
          //zoomControl: true,
          //zoomControlOptions: google.maps.ZoomControlStyle.LARGE,
@@ -87,6 +78,6 @@ function getCurrentPosition(){
              marker.setIcon(image);
              marker.setPosition(latlng);
              infowindow.setContent(placeName);
-             //infowindow.open(map, marker);
+             infowindow.open(map, marker);
          }
      });
